@@ -46,5 +46,4 @@ public class Day3P2 {
 		}
 		return Integer.parseInt(lines.get(0), 2);
 	}
-
 }
