@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Board<T> {
 	private final List<BingoLine<T>> lines = new ArrayList<>();
-	private final List<BingoLine<T>> horizontalLines = new ArrayList<>();
+	private final List<BingoLine<T>> verticalLines = new ArrayList<>();
 
 	public void addLine(BingoLine<T> line) {
 		lines.add(line);
@@ -17,13 +17,13 @@ public class Board<T> {
 			for (BingoLine<T> line : lines) {
 				items.add(line.getItem(i));
 			}
-			horizontalLines.add(new BingoLine<>(items));
+			verticalLines.add(new BingoLine<>(items));
 		}
 	}
 
 	public void draw(T item) {
 		lines.forEach(l -> l.draw(item));
-		horizontalLines.forEach(l -> l.draw(item));
+		verticalLines.forEach(l -> l.draw(item));
 	}
 
 	public int score() {
@@ -32,7 +32,7 @@ public class Board<T> {
 
 	public boolean winner() {
 		List<BingoLine<T>> allLines = new ArrayList<>(lines);
-		allLines.addAll(horizontalLines);
+		allLines.addAll(verticalLines);
 		return allLines.stream().anyMatch(BingoLine::complete);
 	}
 }

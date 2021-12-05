@@ -6,7 +6,6 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class Day4 {
@@ -29,8 +28,6 @@ public class Day4 {
 			}
 		}
 		boards.add(nextBoard);
-		int idx = 0;
-		boolean winner = false;
 		for (int number : numbers) {
 			boards.forEach(b -> b.draw(number));
 			List<Board<Integer>> winningBoards = boards.stream().filter(Board::winner).collect(Collectors.toList());
