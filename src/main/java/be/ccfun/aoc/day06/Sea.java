@@ -15,7 +15,7 @@ public class Sea {
 		for (int i = 0; i < 256; i++) {
 			List<Lanternfish> newFish = new ArrayList<>();
 			for (Lanternfish fish : fishlist) {
-				fish.next().ifPresent(nf -> newFish.add(nf));
+				fish.next().ifPresent(newFish::add);
 			}
 			fishlist.addAll(newFish);
 			System.out.println(fishlist.size());
