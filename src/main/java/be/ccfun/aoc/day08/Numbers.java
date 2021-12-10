@@ -18,7 +18,6 @@ public class Numbers {
 		for (String with6 : digits6) {
 			if (!containsAllLetters(with6, patterns.get(7))) {
 				patterns.put(6, with6);
-
 			}
 		}
 		digits6.remove(patterns.get(6));
