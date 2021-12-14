@@ -22,8 +22,6 @@ public class Day13 {
 		}
 		System.out.println("Folding:");
 		for (String foldInstruction : foldInstructions) {
-			int maxX = points.stream().mapToInt(p -> p.getX()).max().getAsInt();
-			int maxY = points.stream().mapToInt(p -> p.getY()).max().getAsInt();
 			int fold = Integer.parseInt(foldInstruction.split("=")[1]);
 			if (foldInstruction.contains("x=")) {
 				points.stream().forEach(p -> p.foldX(fold));
@@ -44,7 +42,7 @@ public class Day13 {
 				int finalX = x;
 				int finalY = y;
 				if (points.stream().anyMatch(p -> p.getX()== finalX && p.getY() == finalY)) {
-						System.out.print("*");
+						System.out.print("#");
 					} else {
 						System.out.print(".");
 					}
