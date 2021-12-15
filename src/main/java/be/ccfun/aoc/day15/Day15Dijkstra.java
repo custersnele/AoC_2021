@@ -55,12 +55,12 @@ public class Day15Dijkstra {
 		int curX = 0;
 		int curY = 0;
 
-		for (int y = 0; y <= destY; y++) {
-			for (int x = 0; x <= destX; x++) {
-				System.out.print(getCost(new Point(x, y)));
-			}
-			System.out.println();
-		}
+//		for (int y = 0; y <= destY; y++) {
+//			for (int x = 0; x <= destX; x++) {
+//				System.out.print(getCost(new Point(x, y)));
+//			}
+//			System.out.println();
+//		}
 
 		long result = dijkstra(new Point(curX, curY), new Point(destX, destY), destX, destY);
 		System.out.println(result);
