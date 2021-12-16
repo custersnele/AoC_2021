@@ -9,6 +9,7 @@ public class Day16 {
 	private static List<String> lines = null;
 	private static int totalVersion = 0;
 
+
 	public static void main(String[] arg) throws IOException {
 		lines = Files.readAllLines(Path.of("src/main/resources/day16.txt"));
 		String hexAddr = lines.get(0);
@@ -19,17 +20,18 @@ public class Day16 {
 			System.out.println(builder.toString());
 		}
 		String binary = builder.toString();
-		parsePacket(binary);
-
+		PacketResult packetResult = parsePacket(binary);
+		System.out.println(packetResult.getResult());
 	}
 
-	private static int parsePacket(String binary) {
+	private static PacketResult parsePacket(String binary) {
 		int version = Integer.parseInt(binary.substring(0, 3), 2); // 3-bits
 		System.out.println("Version: " + version);
 		totalVersion += version;
 		System.out.println(totalVersion);
 		int type = Integer.parseInt(binary.substring(3, 6), 2); // 3-bits
 		System.out.println("Type: " + type); // other than 4 is operator
+		PacketResult packetResult = new PacketResult(version, type);
 		if (type != 4) {
 			int lengthType = Integer.parseInt(binary.substring(6, 7), 2); // 1-bits
 			System.out.println("LengthType: " + lengthType);
@@ -43,20 +45,24 @@ public class Day16 {
 				int subpacketStart = 7 + bits;
 				int bitsRead = 0;
 				while (bitsRead < subpackets) {
-					int endOfPacket = parsePacket(binary.substring(subpacketStart));
-					subpacketStart += endOfPacket;
-					bitsRead += endOfPacket;
+					PacketResult childPacket = parsePacket(binary.substring(subpacketStart));
+					packetResult.addChild(childPacket);
+					subpacketStart += childPacket.getLength();
+					bitsRead += childPacket.getLength();
 				}
-				return subpacketStart;
+				packetResult.setLength(subpacketStart);
+				return packetResult;
 			} else {
 				int subpackets = Integer.parseInt(binary.substring(7, 7 + bits), 2); // 11-bits
 				System.out.println("Subpackets: " + subpackets);
 				int subpacketStart = 7 + bits;
 				for (int i = 0; i < subpackets; i++)  {
-					int endOfPacket = parsePacket(binary.substring(subpacketStart));
-					subpacketStart += endOfPacket;
+					PacketResult childPacket = parsePacket(binary.substring(subpacketStart));
+					packetResult.addChild(childPacket);
+					subpacketStart += childPacket.getLength();
 				}
-				return subpacketStart;
+				packetResult.setLength(subpacketStart);
+				return packetResult;
 			}
 		} else {
 			boolean reading = true;
@@ -67,8 +73,11 @@ public class Day16 {
 				reading = binary.charAt(index) == '1';
 				index += 5;
 			}
-			System.out.println("Literal: " + Long.parseLong(builder.toString(), 2));
-			return index;
+			long l = Long.parseLong(builder.toString(), 2);
+			System.out.println("Literal: " + l);
+			packetResult.setLiteral(l);
+			packetResult.setLength(index);
+			return packetResult;
 		}
 	}
 }
