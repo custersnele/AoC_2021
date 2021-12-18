@@ -5,16 +5,16 @@ import java.util.Stack;
 public class SFNUtil {
 
 	public static SFN add(SFN sfn, SFN other) {
-		return new USFN(sfn, other);
+		return reduce(new USFN(sfn, other));
 	}
 
 	public static SFN reduce(SFN sfn) {
-		SFN next = reduceOne(sfn).split().result;
+		SFN next = reduceOne(sfn).split().getResult();
 		while (!next.toString().equals(sfn.toString())) {
 			sfn = next;
-			next = reduceOne(sfn).split().result;
+			next = reduceOne(sfn).split().getResult();
 		}
-		System.out.println("REDUCED: " + next);
+		//System.out.println("REDUCED: " + next);
 		return next;
 	}
 
@@ -43,10 +43,8 @@ public class SFNUtil {
 					reduced = true;
 					if (!sfnStack.isEmpty()) {
 						SFN pop = sfnStack.pop();
-						//i++;
 						depth--;
 						pop.add(left.getLeft());
-						// when to add 0?
 						sfnStack.push(pop);
 						sfnStack.push(new SFNValue(0));
 					} else {

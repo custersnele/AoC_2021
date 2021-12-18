@@ -22,9 +22,9 @@ public class USFN implements SFN{
 		SplitResult resultLeft = left.split();
 		if (!resultLeft.isSplitted()) {
 			SplitResult resultRight = right.split();
-			return new SplitResult(new USFN(resultLeft.result, resultRight.result), resultRight.isSplitted());
+			return new SplitResult(new USFN(resultLeft.getResult(), resultRight.getResult()), resultRight.isSplitted());
 		} else {
-			return new SplitResult(new USFN(resultLeft.result, right), true);
+			return new SplitResult(new USFN(resultLeft.getResult(), right), true);
 		}
 	}
 
