@@ -45,6 +45,20 @@ public class Day18 {
 		System.out.println(add);
 		System.out.println(add.getMagnitude());
 
+		long largest = 0;
+		for (int i = 0; i < lines.size(); i++) {
+			for (int j = 0; j < lines.size(); j++) {
+				if (i != j) {
+					SFN sum = SFNUtil.add(SFNUtil.create(lines.get(i)), SFNUtil.create(lines.get(j)));
+					sum = SFNUtil.reduce(sum);
+					if (sum.getMagnitude() > largest) {
+						largest = sum.getMagnitude();
+					}
+				}
+			}
+		}
+		System.out.println(largest);
+
 	}
 
 }
