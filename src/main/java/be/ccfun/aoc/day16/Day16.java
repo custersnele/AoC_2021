@@ -9,9 +9,8 @@ public class Day16 {
 	private static List<String> lines = null;
 	private static int totalVersion = 0;
 
-
 	public static void main(String[] arg) throws IOException {
-		lines = Files.readAllLines(Path.of("src/main/resources/day16.txt"));
+		lines = Files.readAllLines(Path.of("src/main/resources/day16_johan.txt"));
 		String hexAddr = lines.get(0);
 		StringBuilder builder = new StringBuilder();
 		for (int i = 0; i < hexAddr.length(); i++) {
